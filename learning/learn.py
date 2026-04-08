@@ -36,3 +36,23 @@ y = "krn"
 
 print(type(x)); print(y)
 
+#data types
+
+a = 1
+b = 2.5
+c = "hello"
+d = True
+e = None
+f = [1, 2, 3]
+g = (1, 2, 3) 
+h = {"name": "Alice", "age": 30}
+i = {1, 2, 3}
+j = b"hello"
+k = bytearray(b"hello")
+l = memoryview(b"hello")
+m = range(5)
+n = frozenset({1, 2, 3})
+o = complex(1, 2)
+
+print(type(a)); print(type(b)); print(type(c)); print(type(d)); print(type(e)); print(type(f)); print(type(g)); print(type(h)); print(type(i)); print(type(j)); print(type(k)); print(type(l)); print(type(m)); print(type(n)); print(type(o))
+
