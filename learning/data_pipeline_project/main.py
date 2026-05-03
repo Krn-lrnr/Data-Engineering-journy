@@ -1,20 +1,41 @@
 import json
+import logging
 from extract import extract
 from transform import transform
 from load import load
 
+# setup logging
+logging.basicConfig(
+    filename="pipeline.log",
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
 def main():
-    with open("config.json", "r") as f:
-        config = json.load(f)
+    try:
+        with open("config.json", "r") as f:
+            config = json.load(f)
 
-    data = extract(config["url"])
+        logging.info("Config loaded")
 
-    if data:
-        df = transform(data)
-        load(df, config["output_file"])
-        print("Pipeline executed successfully")
-    else:
-        print("Failed to fetch data")
+        data = extract(config["url"])
+
+        if data:
+            logging.info("Data extracted")
+
+            df = transform(data)
+            logging.info("Data transformed")
+
+            load(df, config["output_file"])
+            logging.info("Data loaded successfully")
+
+            print("Pipeline executed successfully")
+
+        else:
+            logging.error("Extraction failed")
+
+    except Exception as e:
+        logging.error(f"Pipeline failed: {e}")
 
 if __name__ == "__main__":
     main()
