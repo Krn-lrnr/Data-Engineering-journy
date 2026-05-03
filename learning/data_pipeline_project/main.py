@@ -1,8 +1,12 @@
 import json
 import logging
-from extract import extract
-from transform import transform
-from load import load
+try:
+    from extract import extract
+    from transform import transform
+    from load import load
+except ImportError as e:
+    logging.error(f"Failed to import modules: {e}")
+    raise
 
 # setup logging
 logging.basicConfig(
