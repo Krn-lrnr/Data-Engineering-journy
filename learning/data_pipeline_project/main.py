@@ -1,14 +1,10 @@
 import json
 import logging
-try:
-    from extract import extract
-    from transform import transform
-    from load import load
-except ImportError as e:
-    logging.error(f"Failed to import modules: {e}")
-    raise
+import argparse
+from extract import extract
+from transform import transform
+from load import load
 
-# setup logging
 logging.basicConfig(
     filename="pipeline.log",
     level=logging.INFO,
@@ -16,11 +12,21 @@ logging.basicConfig(
 )
 
 def main():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--config", default="config.json", help="Path to config file")
+    parser.add_argument("--output", help="Override output file")
+
+    args = parser.parse_args()
+
     try:
-        with open("config.json", "r") as f:
+        with open(args.config, "r") as f:
             config = json.load(f)
 
         logging.info("Config loaded")
+
+        if args.output:
+            config["output_file"] = args.output
 
         data = extract(config["url"])
 
