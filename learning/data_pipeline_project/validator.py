@@ -1,3 +1,5 @@
+import pandas as pd
+
 def validate(data):
     if data is None:
         raise ValueError("Dataset is empty")
@@ -10,21 +12,15 @@ def validate(data):
     if len(rows) == 0:
         raise ValueError("Dataset is empty")
 
-    for row in rows:
-        if row is None:
-            raise ValueError("Dataset contains missing values")
+    # Convert to DataFrame (important for pipeline)
+    df = pd.DataFrame(rows)
 
-        if isinstance(row, dict):
-            if any(value is None for value in row.values()):
-                raise ValueError("Dataset contains missing values")
-        elif isinstance(row, (list, tuple, set)):
-            if any(value is None for value in row):
-                raise ValueError("Dataset contains missing values")
+    # Check missing values
+    if df.isnull().sum().sum() > 0:
+        raise ValueError("Dataset contains missing values")
 
-    seen = set()
-    for row in rows:
-        if row in seen:
-            raise ValueError("Dataset contains duplicate rows")
-        seen.add(row)
+    # Check duplicates
+    if df.duplicated().sum() > 0:
+        raise ValueError("Dataset contains duplicate rows")
 
-    return rows
+    return df
