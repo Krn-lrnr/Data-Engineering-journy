@@ -1,18 +1,30 @@
-import pandas as pd
-
 def validate(data):
-    df = pd.DataFrame(data)
-
-    # check empty dataset
-    if df.empty:
+    if data is None:
         raise ValueError("Dataset is empty")
 
-    # check missing values
-    if df.isnull().sum().sum() > 0:
-        raise ValueError("Dataset contains missing values")
+    try:
+        rows = list(data)
+    except TypeError:
+        raise ValueError("Dataset must be iterable")
 
-    # check duplicates
-    if df.duplicated().sum() > 0:
-        raise ValueError("Dataset contains duplicate rows")
+    if len(rows) == 0:
+        raise ValueError("Dataset is empty")
 
-    return df
+    for row in rows:
+        if row is None:
+            raise ValueError("Dataset contains missing values")
+
+        if isinstance(row, dict):
+            if any(value is None for value in row.values()):
+                raise ValueError("Dataset contains missing values")
+        elif isinstance(row, (list, tuple, set)):
+            if any(value is None for value in row):
+                raise ValueError("Dataset contains missing values")
+
+    seen = set()
+    for row in rows:
+        if row in seen:
+            raise ValueError("Dataset contains duplicate rows")
+        seen.add(row)
+
+    return rows
