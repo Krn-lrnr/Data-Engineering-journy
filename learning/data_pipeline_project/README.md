@@ -12,3 +12,9 @@ A modular ETL pipeline built in Python.
 ## Run
 
 python main.py
+
+## Installation
+
+Install dependencies:
+
+pip install -r requirements.txt
