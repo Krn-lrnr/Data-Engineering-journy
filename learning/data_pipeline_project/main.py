@@ -7,6 +7,7 @@ from transform import transform
 from load import load
 from validator import validate
 from utils import setup_logger
+from load_to_sqlite import load_to_sqlite
 
 # Initialize logging
 setup_logger()
@@ -47,7 +48,10 @@ def main():
             df = transform(df)
             logging.info("Data transformed")
 
-            load(df, config["output_file"])
+            if config.get("sqlite"):
+                load_to_sqlite(df, config["sqlite"]["database"], config["sqlite"]["table"])
+            else:
+                load(df, config["output_file"])
             logging.info("Data loaded successfully")
 
             print("Pipeline executed successfully")
