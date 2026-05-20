@@ -8,6 +8,7 @@ from load import load
 from validator import validate
 from utils import setup_logger
 from load_to_sqlite import load_to_sqlite
+from multi_table_loader import load_multiple_tables
 
 # Initialize logging
 setup_logger()
@@ -49,7 +50,10 @@ def main():
             logging.info("Data transformed")
 
             if config.get("sqlite"):
-                load_to_sqlite(df, config["sqlite"]["database"], config["sqlite"]["table"])
+                if config.get("multiple_tables"):
+                    load_multiple_tables(df)
+                else:
+                    load_to_sqlite(df, config["sqlite"]["database"], config["sqlite"]["table"])
             else:
                 load(df, config["output_file"])
             logging.info("Data loaded successfully")
