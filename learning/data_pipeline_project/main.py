@@ -38,7 +38,11 @@ def main():
         if args.output:
             config["output_file"] = args.output
 
-        data = extract(config["url"])
+        data = extract(
+    config["url"],
+    config["retries"],
+    config["delay"]
+)
 
         if data:
             logging.info("Data extracted")
