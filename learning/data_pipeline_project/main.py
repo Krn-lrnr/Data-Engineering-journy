@@ -9,6 +9,8 @@ from validator import validate
 from utils import setup_logger
 from load_to_sqlite import load_to_sqlite
 from multi_table_loader import load_multiple_tables
+from dotenv import load_dotenv
+import config_loader
 
 # Initialize logging
 setup_logger()
