@@ -11,11 +11,13 @@ from load_to_sqlite import load_to_sqlite
 from multi_table_loader import load_multiple_tables
 from dotenv import load_dotenv
 from config_loader import load_config
+from pipeline_timer import PipelineTimer
 
 load_dotenv()
 
 config = load_config()
-
+timer = PipelineTimer()
+timer.start()
 # Initialize logging
 setup_logger()
 
@@ -69,6 +71,8 @@ def main():
             logging.info("Data loaded successfully")
 
             print("Pipeline executed successfully")
+
+            timer.stop()
 
         else:
             logging.error("Extraction failed")
