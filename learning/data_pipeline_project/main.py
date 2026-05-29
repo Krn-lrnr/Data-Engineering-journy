@@ -72,7 +72,7 @@ def main():
 
             print("Pipeline executed successfully")
 
-            timer.stop()
+            timer.stop() 
 
         else:
             logging.error("Extraction failed")
