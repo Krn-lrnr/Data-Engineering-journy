@@ -1,20 +1,35 @@
 # Data Pipeline Project
 
-A modular ETL pipeline built in Python.
+## Features
 
-## Structure
+- API Data Extraction
+- Data Validation
+- Data Transformation
+- CSV Export
+- SQLite Storage
+- SQL Queries
+- Retry Handling
+- Logging
+- Runtime Monitoring
 
-- extract.py → fetch data
-- transform.py → clean data
-- load.py → save output
-- main.py → run pipeline
+## Project Structure
 
-## Run
+data_pipeline_project/
+├── main.py
+├── extract.py
+├── transform.py
+├── validator.py
+├── load.py
+├── retry_handler.py
+├── pipeline_timer.py
+├── load_to_sqlite.py
+├── query_database.py
+└── ...
+
+## How to Run
 
 python main.py
 
-## Installation
-
-Install dependencies:
+## Requirements
 
 pip install -r requirements.txt
